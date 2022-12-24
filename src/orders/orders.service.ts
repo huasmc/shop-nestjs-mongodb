@@ -20,8 +20,8 @@ export class OrdersService {
     return orders;
   }
 
-  async saveOrder({ product_id, user_id }: CreateOrderDto) {
-    const newOrder = new this.orderModel({ product_id, user_id });
+  async saveOrder(createOrderDto: CreateOrderDto) {
+    const newOrder = new this.orderModel(createOrderDto);
     await newOrder.save();
     return newOrder;
   }

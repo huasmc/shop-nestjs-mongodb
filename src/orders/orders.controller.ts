@@ -27,7 +27,7 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN, Role.USER)
   @Post('add')
-  async addUser(@Body() createOrderDto: CreateOrderDto) {
+  async addOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.saveOrder(createOrderDto);
   }
 
