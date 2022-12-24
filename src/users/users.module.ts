@@ -5,12 +5,13 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { AuthModule } from 'src/auth/auth.module';
 import { OrdersModule } from 'src/orders/orders.module';
+import { forwardRef } from '@nestjs/common/utils';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'user', schema: UserSchema }]),
     AuthModule,
-    OrdersModule,
+    forwardRef(() => OrdersModule),
   ],
   providers: [UsersService],
   exports: [UsersService],

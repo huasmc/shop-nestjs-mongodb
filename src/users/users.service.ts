@@ -30,6 +30,11 @@ export class UsersService {
     return user;
   }
 
+  async getUserById(_id: Types.ObjectId) {
+    const user = this.userModel.findOne({ _id });
+    return user;
+  }
+
   async addAdminRole(userId: string) {
     const result: any = await this.userModel.updateOne(
       { _id: new Types.ObjectId(userId) },

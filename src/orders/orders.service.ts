@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { forwardRef } from '@nestjs/common/utils';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { UsersService } from 'src/users/users.service';
 import { CreateOrderDto, Order, UpdateOrderDto } from './models/orders.model';
 
 @Injectable()
 export class OrdersService {
   constructor(
+    @Inject(forwardRef(() => UsersService))
+    private readonly usersService: UsersService,
     @InjectModel('order') private readonly orderModel: Model<Order>,
   ) {}
 
@@ -22,8 +26,14 @@ export class OrdersService {
 
   async saveOrder(createOrderDto: CreateOrderDto) {
     const newOrder = new this.orderModel(createOrderDto);
-    await newOrder.save();
-    return newOrder;
+    const user = await this.usersService.getUserById(
+      new Types.ObjectId(createOrderDto.user_id),
+    );
+    if (!user) return { message: 'User doesnt exist', sucess: false };
+    else if (user) {
+      await newOrder.save();
+      return newOrder;
+    }
   }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {
