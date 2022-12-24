@@ -8,6 +8,11 @@ import { User } from './models/users.model';
 export class UsersService {
   constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
 
+  async getAllUsers() {
+    const users = this.userModel.find();
+    return users;
+  }
+
   async saveUser(userName: string, password: string) {
     const username = userName.toLowerCase();
     const newUser = new this.userModel({ username, password });
@@ -28,5 +33,10 @@ export class UsersService {
     );
     if (result && result.modifiedCount > 0) return true;
     return false;
+  }
+
+  async deleteUser(_id: string) {
+    const deletedUser = this.userModel.findOneAndDelete({ _id });
+    return deletedUser;
   }
 }

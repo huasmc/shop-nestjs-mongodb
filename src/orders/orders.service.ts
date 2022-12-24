@@ -26,8 +26,8 @@ export class OrdersService {
     return newOrder;
   }
   async deleteOrder(_id: string) {
-    const removedOrder = this.orderModel.findOneAndRemove({ _id });
-    return removedOrder;
+    const deletedOrder = this.orderModel.findOneAndDelete({ _id });
+    return deletedOrder;
   }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {
