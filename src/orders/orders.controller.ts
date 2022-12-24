@@ -9,7 +9,15 @@ import { OrdersService } from './orders.service';
 @Controller('orders')
 export class OrdersController {
   constructor(private ordersService: OrdersService) {}
-  @Get()
+
+  @Get('all')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  getAllOrders() {
+    return this.ordersService.getOrders();
+  }
+
+  @Get('user')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.USER, Role.ADMIN)
   getUserOrders(@Body('user_id') user_id: string) {

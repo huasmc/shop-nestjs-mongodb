@@ -9,6 +9,10 @@ export class OrdersService {
     @InjectModel('order') private readonly orderModel: Model<Order>,
   ) {}
 
+  async getOrders() {
+    return this.orderModel.find();
+  }
+
   async findUserOrders(user_id: string) {
     const orders = await this.orderModel.find({
       user: new Types.ObjectId(user_id),

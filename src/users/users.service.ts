@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Role } from 'src/auth/roles/roles.enum';
 import { User } from './models/users.model';
 
@@ -21,12 +21,12 @@ export class UsersService {
     return user;
   }
 
-  async addAdminRole(user_id: string) {
-    const result: any = this.userModel.updateOne(
-      { user_id },
+  async addAdminRole(userId: string) {
+    const result: any = await this.userModel.updateOne(
+      { _id: new Types.ObjectId(userId) },
       { $addToSet: { roles: Role.ADMIN } },
     );
-    if (result && result.n > 0) return false;
-    return true;
+    if (result && result.modifiedCount > 0) return true;
+    return false;
   }
 }
