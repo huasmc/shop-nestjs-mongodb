@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Role } from 'src/auth/roles/roles.enum';
 
 export const UserSchema = new mongoose.Schema(
   {
@@ -9,7 +10,12 @@ export const UserSchema = new mongoose.Schema(
     },
     password: {
       type: String,
-      requred: true,
+      required: true,
+    },
+    roles: {
+      type: [String],
+      required: true,
+      default: [Role.USER],
     },
   },
   { timestamps: true },
@@ -18,5 +24,6 @@ export const UserSchema = new mongoose.Schema(
 export interface User extends mongoose.Document {
   _id: string;
   username: string;
-  password;
+  password: string;
+  roles: Role[];
 }
