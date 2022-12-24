@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { CreateOrderDto, Order } from './models/orders.model';
+import { CreateOrderDto, Order, UpdateOrderDto } from './models/orders.model';
 
 @Injectable()
 export class OrdersService {
@@ -28,5 +28,14 @@ export class OrdersService {
   async deleteOrder(_id: string) {
     const removedOrder = this.orderModel.findOneAndRemove({ _id });
     return removedOrder;
+  }
+
+  async updateOrder(updateOrderDto: UpdateOrderDto) {
+    const updatedOrder = this.orderModel.findOneAndUpdate(
+      { _id: updateOrderDto._id },
+      { $set: { quantity: updateOrderDto.quantity } },
+      { new: true },
+    );
+    return updatedOrder;
   }
 }

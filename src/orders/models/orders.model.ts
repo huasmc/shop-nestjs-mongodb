@@ -32,3 +32,8 @@ export interface CreateOrderDto {
   user_id: string;
   quantity: number;
 }
+
+export interface UpdateOrderDto {
+  _id: string;
+  quantity: number;
+}

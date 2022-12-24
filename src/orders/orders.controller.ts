@@ -11,7 +11,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
-import { CreateOrderDto } from './models/orders.model';
+import { CreateOrderDto, UpdateOrderDto } from './models/orders.model';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')
@@ -44,5 +44,11 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   async deleteOrder(@Body() body) {
     return this.ordersService.deleteOrder(body.order_id);
+  }
+
+  @Put('update')
+  @Roles(Role.ADMIN, Role.USER)
+  async updateOrder(@Body() updateOrderDto: UpdateOrderDto) {
+    return this.ordersService.updateOrder(updateOrderDto);
   }
 }
