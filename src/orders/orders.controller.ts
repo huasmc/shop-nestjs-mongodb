@@ -1,4 +1,12 @@
-import { Controller, Body, Get, Put, UseGuards, Post } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Get,
+  Put,
+  UseGuards,
+  Post,
+  Delete,
+} from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
@@ -11,29 +19,29 @@ export class OrdersController {
   constructor(private ordersService: OrdersService) {}
 
   @Get('all')
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   getAllOrders() {
     return this.ordersService.getOrders();
   }
 
   @Get('user')
-  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.USER, Role.ADMIN)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   getUserOrders(@Body('user_id') user_id: string) {
     return this.ordersService.findUserOrders(user_id);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN, Role.USER)
   @Post('add')
+  @Roles(Role.ADMIN, Role.USER)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async addOrder(@Body() createOrderDto: CreateOrderDto) {
     return this.ordersService.saveOrder(createOrderDto);
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('delete')
   @Roles(Role.ADMIN, Role.USER)
-  @Post('delete')
+  @UseGuards(JwtAuthGuard, RolesGuard)
   async deleteOrder(@Body() body) {
     return this.ordersService.deleteOrder(body.order_id);
   }
