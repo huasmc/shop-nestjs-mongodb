@@ -15,12 +15,12 @@ export class AuthService {
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!user) throw new NotAcceptableException('User not found');
     if (user && isPasswordValid)
-      return { userId: user.id, userName: user.username };
+      return { userId: user._id, userName: user.username };
     else return null;
   }
 
   async signIn(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return { access_token: this.jwtService.sign(payload) };
+    const payload = { username: user.userName, sub: user.userId };
+    return { ...payload, access_token: this.jwtService.sign(payload) };
   }
 }

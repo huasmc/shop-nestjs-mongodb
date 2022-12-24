@@ -4,8 +4,6 @@ import { UserSchema } from './models/users.model';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { AuthModule } from 'src/auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from 'src/auth/roles/roles.guard';
 
 @Module({
   imports: [

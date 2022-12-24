@@ -27,4 +27,19 @@ export interface User extends mongoose.Document {
   username: string;
   password: string;
   roles: Role[];
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CreateUserDTO {
+  username: string;
+  password: string;
+}
+
+export interface UserActionDTO {
+  _id: string;
+  username: string;
+  roles: string[];
+  createdAt: string;
+  updatedAt: string;
 }

@@ -17,7 +17,7 @@ export class UsersService {
 
   async getUser(userName: string) {
     const username = userName.toLowerCase();
-    const user = this.userModel.findOne({ username }).select({ password: 0 });
+    const user = this.userModel.findOne({ username });
     return user;
   }
 

@@ -15,6 +15,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
+import { UserActionDTO } from './models/users.model';
 
 @Controller('users')
 export class UsersController {
@@ -55,7 +56,7 @@ export class UsersController {
   @Get('profile')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.USER)
-  getProfile(@Request() request): any {
+  getProfile(@Request() request): UserActionDTO {
     return request.user;
   }
 }
