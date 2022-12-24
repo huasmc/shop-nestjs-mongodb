@@ -10,6 +10,7 @@ import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { AuthService } from 'src/auth/auth.service';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -37,5 +38,11 @@ export class UsersController {
   @Post('/sign-in')
   signIn(@Request() request): any {
     return this.authService.signIn(request.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() request): any {
+    return request.user;
   }
 }
