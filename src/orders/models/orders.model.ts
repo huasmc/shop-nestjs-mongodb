@@ -5,13 +5,17 @@ export const OrderSchema = new mongoose.Schema(
     product_id: {
       type: String,
       required: true,
+      unique: false,
     },
     user_id: {
       type: String,
       required: true,
+      unique: false,
     },
     quantity: {
       type: Number,
+      required: true,
+      unique: false,
     },
   },
 

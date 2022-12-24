@@ -25,10 +25,6 @@ export class OrdersService {
     await newOrder.save();
     return newOrder;
   }
-  async deleteOrder(_id: string) {
-    const deletedOrder = this.orderModel.findOneAndDelete({ _id });
-    return deletedOrder;
-  }
 
   async updateOrder(updateOrderDto: UpdateOrderDto) {
     const updatedOrder = this.orderModel.findOneAndUpdate(
@@ -37,5 +33,16 @@ export class OrdersService {
       { new: true },
     );
     return updatedOrder;
+  }
+
+  async deleteOrder(_id: string) {
+    const deletedOrder = this.orderModel.findOneAndDelete({ _id });
+    return deletedOrder;
+  }
+
+  async deleteUserOrders(_id: string) {
+    const deletedUserOrders = this.orderModel.deleteMany({ user_id: _id });
+    console.log(deletedUserOrders);
+    return deletedUserOrders;
   }
 }

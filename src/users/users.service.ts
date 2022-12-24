@@ -1,12 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Role } from 'src/auth/roles/roles.enum';
+import { OrdersService } from 'src/orders/orders.service';
 import { User } from './models/users.model';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel('user') private readonly userModel: Model<User>) {}
+  constructor(
+    @InjectModel('user') private readonly userModel: Model<User>,
+    @Inject(OrdersService) private readonly ordersService: OrdersService,
+  ) {}
 
   async getAllUsers() {
     const users = this.userModel.find();
