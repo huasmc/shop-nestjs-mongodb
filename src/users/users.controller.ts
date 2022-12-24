@@ -9,10 +9,14 @@ import {
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
 import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(
+    private readonly userService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/register')
   async addUser(
@@ -32,6 +36,6 @@ export class UsersController {
   @UseGuards(LocalAuthGuard)
   @Post('/sign-in')
   signIn(@Request() request): any {
-    return { user: request.user, message: 'User sign-in success' };
+    return this.authService.signIn(request.user);
   }
 }
