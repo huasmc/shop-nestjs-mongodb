@@ -57,6 +57,9 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.USER)
   getProfile(@Request() request): UserActionDTO {
-    return request.user;
+    const { password, ...fields } = request.user;
+    const { _doc } = fields;
+    const { password: _, ...doc } = _doc;
+    return doc;
   }
 }

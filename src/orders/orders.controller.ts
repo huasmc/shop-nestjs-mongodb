@@ -20,7 +20,13 @@ export class OrdersController {
   @Roles(Role.ADMIN, Role.USER)
   @Post('add')
   async addUser(@Body() createOrderDto: CreateOrderDto) {
-    this.ordersService.saveOrder(createOrderDto);
-    return createOrderDto;
+    return this.ordersService.saveOrder(createOrderDto);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN, Role.USER)
+  @Post('delete')
+  async deleteOrder(@Body() body) {
+    return this.ordersService.deleteOrder(body.order_id);
   }
 }

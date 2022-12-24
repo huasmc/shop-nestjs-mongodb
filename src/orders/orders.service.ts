@@ -21,4 +21,8 @@ export class OrdersService {
     await newOrder.save();
     return newOrder;
   }
+  async deleteOrder(_id: string) {
+    const removedOrder = this.orderModel.findOneAndRemove({ _id });
+    return removedOrder;
+  }
 }
