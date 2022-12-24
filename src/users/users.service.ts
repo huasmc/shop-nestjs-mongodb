@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Role } from 'src/auth/roles/roles.enum';
 import { User } from './models/users.model';
 
 @Injectable()
@@ -16,7 +17,17 @@ export class UsersService {
 
   async getUser(userName: string) {
     const username = userName.toLowerCase();
-    const user = this.userModel.findOne({ username });
+    const user = this.userModel.findOne({ username }).select({ password: 0 });
     return user;
+  }
+
+  async addAdminRole(userName: string) {
+    const username = userName.toLowerCase();
+    const result: any = this.userModel.updateOne(
+      { username },
+      { $addToSet: { roles: Role.ADMIN } },
+    );
+    if (result && result.n > 0) return false;
+    return true;
   }
 }

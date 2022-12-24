@@ -3,6 +3,7 @@ import {
   Body,
   Post,
   Get,
+  Put,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -37,15 +38,23 @@ export class UsersController {
     };
   }
 
-  @UseGuards(LocalAuthGuard)
+  @Put('add-admin-role')
+  @UseGuards(JwtAuthGuard)
+  async updateRole(@Body() body) {
+    const username = body.username;
+    const isSuccess = this.userService.addAdminRole(username);
+    return isSuccess;
+  }
+
   @Post('sign-in')
+  @UseGuards(LocalAuthGuard)
   signIn(@Request() request): any {
     return this.authService.signIn(request.user);
   }
 
+  @Get('profile')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.USER)
-  @Get('profile')
   getProfile(@Request() request): any {
     return request.user;
   }
