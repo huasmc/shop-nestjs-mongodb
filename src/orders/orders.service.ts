@@ -46,14 +46,19 @@ export class OrdersService {
   }
 
   async deleteOrder(_id: string) {
-    const deletedOrder = this.orderModel.findOneAndDelete({ _id });
-    return deletedOrder;
+    const deletedOrder = await this.orderModel.findOneAndDelete({ _id }).exec();
+    return { order: deletedOrder, sucess: deletedOrder !== null };
   }
 
   async deleteUserOrders(_id: string) {
-    const deletedUserOrders = this.orderModel.deleteMany({
+    const deletedUserOrders = await this.orderModel.deleteMany({
       user_id: _id,
     });
-    return deletedUserOrders;
+    const deletedCount = deletedUserOrders.deletedCount;
+    return {
+      orders: deletedUserOrders,
+      deletedUserOrders: deletedUserOrders.deletedCount,
+      sucess: deletedCount > 0,
+    };
   }
 }

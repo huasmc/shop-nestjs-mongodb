@@ -49,7 +49,7 @@ export class UsersService {
     const deletedOrders = await this.ordersService.deleteUserOrders(_id);
     return {
       user: deletedUser,
-      orders: deletedOrders.deletedCount,
+      orders: deletedOrders,
       sucess: deletedUser !== null,
     };
   }
