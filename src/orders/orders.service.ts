@@ -41,8 +41,9 @@ export class OrdersService {
   }
 
   async deleteUserOrders(_id: string) {
-    const deletedUserOrders = this.orderModel.deleteMany({ user_id: _id });
-    console.log(deletedUserOrders);
+    const deletedUserOrders = this.orderModel.deleteMany({
+      user_id: _id,
+    });
     return deletedUserOrders;
   }
 }

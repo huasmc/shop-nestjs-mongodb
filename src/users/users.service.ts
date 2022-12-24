@@ -13,7 +13,7 @@ export class UsersService {
   ) {}
 
   async getAllUsers() {
-    const users = this.userModel.find();
+    const users = this.userModel.find().select({ password: 0 });
     return users;
   }
 
@@ -40,7 +40,12 @@ export class UsersService {
   }
 
   async deleteUser(_id: string) {
-    const deletedUser = this.userModel.findOneAndDelete({ _id });
-    return deletedUser;
+    const deletedUser = await this.userModel.findOneAndDelete({ _id });
+    const deletedOrders = await this.ordersService.deleteUserOrders(_id);
+    return {
+      user: deletedUser,
+      orders: deletedOrders.deletedCount,
+      sucess: deletedUser !== null,
+    };
   }
 }
