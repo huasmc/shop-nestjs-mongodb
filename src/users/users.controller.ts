@@ -1,6 +1,14 @@
-import { Controller, Body, Post, Get } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  Get,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
+import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -11,8 +19,6 @@ export class UsersController {
     @Body('username') userName: string,
     @Body('password') password: string,
   ) {
-    console.log(userName);
-    console.log(password);
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltOrRounds);
     const result = await this.userService.saveUser(userName, hashedPassword);
@@ -21,5 +27,11 @@ export class UsersController {
       userId: result.id,
       userName: result.username,
     };
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('/sign-in')
+  signIn(@Request() request): any {
+    return { user: request.user, message: 'User sign-in success' };
   }
 }
