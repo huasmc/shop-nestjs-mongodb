@@ -6,6 +6,7 @@ import {
   Put,
   Request,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import * as bcrypt from 'bcrypt';
@@ -68,7 +69,7 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
-  @Get()
+  @Delete('delete')
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
   deleteUser(@Body() body) {
