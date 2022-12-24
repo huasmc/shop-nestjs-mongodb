@@ -21,10 +21,9 @@ export class UsersService {
     return user;
   }
 
-  async addAdminRole(userName: string) {
-    const username = userName.toLowerCase();
+  async addAdminRole(user_id: string) {
     const result: any = this.userModel.updateOne(
-      { username },
+      { user_id },
       { $addToSet: { roles: Role.ADMIN } },
     );
     if (result && result.n > 0) return false;

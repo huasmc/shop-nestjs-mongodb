@@ -41,9 +41,9 @@ export class UsersController {
 
   @Put('add-admin-role')
   @UseGuards(JwtAuthGuard)
-  async updateRole(@Body() body) {
-    const username = body.username;
-    const isSuccess = this.userService.addAdminRole(username);
+  async addAdminRole(@Body() body) {
+    const { user_id } = body;
+    const isSuccess = this.userService.addAdminRole(user_id);
     return isSuccess;
   }
 
