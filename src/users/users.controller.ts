@@ -48,8 +48,11 @@ export class UsersController {
 
   @Post('sign-in')
   @UseGuards(LocalAuthGuard)
-  signIn(@Request() request): any {
-    return this.authService.signIn(request.user);
+  async signIn(@Request() request): Promise<any> {
+    const user = await this.userService.getUser(request.user.userName);
+    const token = await this.authService.signIn(request.user);
+
+    return { user: user, access_token: token };
   }
 
   @Get('profile')
