@@ -4,6 +4,7 @@ import { Model, Types } from 'mongoose';
 import { Role } from 'src/auth/roles/roles.enum';
 import { OrdersService } from 'src/orders/orders.service';
 import { User } from './models/users.model';
+import { ConflictException } from '@nestjs/common/exceptions';
 
 @Injectable()
 export class UsersService {
@@ -19,6 +20,10 @@ export class UsersService {
 
   async saveUser(userName: string, password: string) {
     const username = userName.toLowerCase();
+    const user = await this.userModel.findOne({ username });
+    if (user) {
+      throw new ConflictException('Username taken');
+    }
     const newUser = new this.userModel({ username, password });
     await newUser.save();
     return newUser;
