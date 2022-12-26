@@ -32,7 +32,7 @@ export class OrdersService {
       { skip: skipOrders, limit: limit },
     );
     const count = await this.orderModel.countDocuments();
-    return { ...orders, count };
+    return { orders: orders, count };
   }
 
   async saveOrder(createOrderDto: CreateOrderDto) {
