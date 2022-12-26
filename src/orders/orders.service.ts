@@ -14,7 +14,13 @@ export class OrdersService {
   ) {}
 
   async getOrders(skipOrders: number, limit?: number) {
-    return this.orderModel.find({}, {}, { skip: skipOrders, limit: limit });
+    const count = await this.orderModel.countDocuments();
+    const orders = this.orderModel.find(
+      {},
+      {},
+      { skip: skipOrders, limit: limit },
+    );
+    return { ...orders, count };
   }
 
   async findUserOrders(user_id: string, skipOrders?: number, limit?: number) {
@@ -25,7 +31,8 @@ export class OrdersService {
       {},
       { skip: skipOrders, limit: limit },
     );
-    return orders;
+    const count = await this.orderModel.countDocuments();
+    return { ...orders, count };
   }
 
   async saveOrder(createOrderDto: CreateOrderDto) {
