@@ -23,7 +23,10 @@ export class OrdersController {
   @Get('all')
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  getAllOrders(@Query('skipOrders') skipOrders: number, @Query('limit') limit) {
+  getAllOrders(
+    @Query('skipOrders') skipOrders: number,
+    @Query('limit') limit: number,
+  ) {
     return this.ordersService.getOrders(skipOrders, limit);
   }
 

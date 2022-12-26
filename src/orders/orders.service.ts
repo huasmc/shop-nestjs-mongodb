@@ -23,11 +23,9 @@ export class OrdersService {
     return { ...orders, count };
   }
 
-  async findUserOrders(user_id: string, skipOrders?: number, limit?: number) {
+  async findUserOrders(user_id: string, skipOrders: number, limit: number) {
     const orders = await this.orderModel.find(
-      {
-        user: new Types.ObjectId(user_id),
-      },
+      { user_id },
       {},
       { skip: skipOrders, limit: limit },
     );
