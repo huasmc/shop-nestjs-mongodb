@@ -13,14 +13,18 @@ export class OrdersService {
     @InjectModel('order') private readonly orderModel: Model<Order>,
   ) {}
 
-  async getOrders() {
-    return this.orderModel.find();
+  async getOrders(skipOrders: number, limit?: number) {
+    return this.orderModel.find({}, {}, { skip: skipOrders, limit: limit });
   }
 
-  async findUserOrders(user_id: string) {
-    const orders = await this.orderModel.find({
-      user: new Types.ObjectId(user_id),
-    });
+  async findUserOrders(user_id: string, skipOrders?: number, limit?: number) {
+    const orders = await this.orderModel.find(
+      {
+        user: new Types.ObjectId(user_id),
+      },
+      {},
+      { skip: skipOrders, limit: limit },
+    );
     return orders;
   }
 

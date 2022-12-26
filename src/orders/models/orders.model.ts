@@ -41,3 +41,14 @@ export interface UpdateOrderDto {
   _id: string;
   quantity: number;
 }
+
+export interface ReadOrdersDto {
+  skipOrders: number;
+  limit: number;
+}
+
+export interface ReadUserOrdersDto {
+  user_id: string;
+  skipOrders: number;
+  limit: number;
+}

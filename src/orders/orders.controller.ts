@@ -11,7 +11,12 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/roles.enum';
 import { RolesGuard } from 'src/auth/roles/roles.guard';
-import { CreateOrderDto, UpdateOrderDto } from './models/orders.model';
+import {
+  CreateOrderDto,
+  UpdateOrderDto,
+  ReadOrdersDto,
+  ReadUserOrdersDto,
+} from './models/orders.model';
 import { OrdersService } from './orders.service';
 
 @Controller('orders')
@@ -21,15 +26,17 @@ export class OrdersController {
   @Get('all')
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  getAllOrders() {
-    return this.ordersService.getOrders();
+  getAllOrders(@Body() readOrdersDto: ReadOrdersDto) {
+    const { skipOrders, limit } = readOrdersDto;
+    return this.ordersService.getOrders(skipOrders, limit);
   }
 
   @Get('user')
   @Roles(Role.USER, Role.ADMIN)
   @UseGuards(JwtAuthGuard, RolesGuard)
-  getUserOrders(@Body('user_id') user_id: string) {
-    return this.ordersService.findUserOrders(user_id);
+  getUserOrders(@Body() readUserOrdersDto: ReadUserOrdersDto) {
+    const { user_id, skipOrders, limit } = readUserOrdersDto;
+    return this.ordersService.findUserOrders(user_id, skipOrders, limit);
   }
 
   @Post('add')
