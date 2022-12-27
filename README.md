@@ -24,9 +24,18 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+NestJS server side application that implements sign-up and user authentication with JWT. Performs CRUD operations for shopping orders using MongoDB.
 
 ## Installation
+
+Set the following environment variables in a created `.env` file inside the root folder.
+
+```bash
+ATLAS_URI=mongodb+srv://nestjs:yQU5IXaFhOp2hoVk@european-capitals-db.xgejw.mongodb.net/shop-nestjs-mongodb?retryWrites=true&w=majority
+JWT_SECRET=secretKey
+```
+
+Install dependencies
 
 ```bash
 $ npm install
