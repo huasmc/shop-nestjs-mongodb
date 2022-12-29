@@ -28,18 +28,20 @@ NestJS server side application that implements sign-up and user authentication w
 
 ## Installation
 
-Set the following environment variables in a created `.env` file inside the root folder.
+1. Set the following environment variables in a created `.env` file inside the root folder.
 
 ```bash
 ATLAS_URI=mongodb+srv://nestjs:yQU5IXaFhOp2hoVk@european-capitals-db.xgejw.mongodb.net/shop-nestjs-mongodb?retryWrites=true&w=majority
 JWT_SECRET=secretKey
 ```
 
-Install dependencies
+2. Install dependencies
 
 ```bash
 $ npm install
 ```
+
+3. Run application
 
 ```bash
 $ npm run start:dev
