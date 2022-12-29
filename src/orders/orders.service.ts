@@ -29,7 +29,7 @@ export class OrdersService {
       {},
       { skip: skipOrders, limit: limit },
     );
-    const count = await this.orderModel.countDocuments();
+    const count = await this.orderModel.countDocuments({ user_id });
     return { orders: orders, count };
   }
 
