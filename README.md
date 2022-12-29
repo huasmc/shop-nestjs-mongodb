@@ -24,7 +24,7 @@
 
 ## Description
 
-NestJS server side application that implements sign-up and user authentication with JWT. Performs CRUD operations for shopping orders using MongoDB.
+NestJS server side application that implements sign-up and user authentication with JWT. Performs CRUD operations for shopping orders using MongoDB using Role based guards for authorization.
 
 ## Installation
 
@@ -40,6 +40,19 @@ Install dependencies
 ```bash
 $ npm install
 ```
+
+```bash
+$ npm run start:dev
+```
+
+## Met requirements
+
+- User sign-up/sign-in
+- Roles authorization (User, Admin)
+- CRUD for orders
+- Partial CRUD for users
+- MongoDB (Atlas)
+- Authorized based actions (Admin: reads, updates, deletes; User: creates and reads)
 
 ## Running the app
 
