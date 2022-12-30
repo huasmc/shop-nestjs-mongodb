@@ -26,6 +26,8 @@
 
 NestJS server side application that implements sign-up and user authentication with JWT. Performs CRUD operations for shopping orders using MongoDB using Role based guards for authorization.
 
+JWT Token for authentication is not being stored in a cookie but should be when in production.
+
 ## Installation
 
 1. Set the following environment variables in a created `.env` file inside the root folder.
